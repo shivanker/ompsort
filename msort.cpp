@@ -13,7 +13,7 @@ void merge(dataType *data, int n1, int n2, dataType *res) {
     int i = 0, j = n1, k = 0;
 
     while(i < n1 && j < n2)
-        if(data[i].key < data[j].key)
+        if((long long)data[i].key < (long long)data[j].key)
             res[k++] = data[i++];
         else
             res[k++] = data[j++];

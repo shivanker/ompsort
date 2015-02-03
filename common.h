@@ -23,7 +23,10 @@
                 fprintf(stderr, ##__VA_ARGS__);\
         } while (0)
 
-
-void mSort(dataType *data, int n);
+long long randull()   {
+    return ((long long)rand() << ((sizeof(int) * 8 - 1) * 2)) | 
+           ((long long)rand() << ((sizeof(int) * 8 - 1) * 1)) |
+           ((long long)rand() << ((sizeof(int) * 8 - 1) * 0));
+}
 
 #endif // _COMMON_H

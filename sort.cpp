@@ -1,8 +1,10 @@
-#include <bits/stdc++.h>
+#include <stdio.h>
 #include <omp.h>
 using namespace std;
 
-#include "common.h"
+#include "sort.h"
+
+void mSort(dataType *data, int n);
 
 void pSort(dataType *data, int ndata, SortType sorter)	{
 	switch(sorter)	{
