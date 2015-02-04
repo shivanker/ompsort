@@ -23,7 +23,7 @@ int main()  {
     
     double start, end;
     start = omp_get_wtime();
-    pSort(data, n, QUICK);
+    pSort(data, n, RADIX);
     end = omp_get_wtime();
     for(i = 0; i < n-1; ++i)
         if((long long)data[i].key > (long long)data[i+1].key) {

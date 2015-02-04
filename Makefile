@@ -8,7 +8,7 @@ LFLAGS = -L.
 LIBS = -lpsort
 
 SRCS = check.cpp time.cpp
-LIBSRCS = qsort.cpp msort.cpp sort.cpp
+LIBSRCS = rsort.cpp qsort.cpp msort.cpp sort.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 LIBOBJS = $(LIBSRCS:.cpp=.o)
