@@ -15,10 +15,10 @@ int main()  {
         #pragma omp parallel firstprivate(data)
         {
             srand(time(NULL) ^ omp_get_thread_num());
-            srand(rand()     ^ omp_get_thread_num());
+            unsigned int seed = rand();
             #pragma omp for
             for(i = 0; i < n; ++i)  {
-                data[i].key = (long long *)randull();
+                data[i].key = (long long *)randull(&seed);
             }
         }
         failed = false;
@@ -46,7 +46,7 @@ int main()  {
                 ints.begin(), ints.end(),
                 rets.begin(), rets.end(),
                 std::back_inserter(v));
-            if(v.size())    {
+            if(v.size() || ints.size() != rets.size())    {
                 printf("(Numbers changed) ");
                 failed = true;
             }

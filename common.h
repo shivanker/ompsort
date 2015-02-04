@@ -23,10 +23,10 @@
                 fprintf(stderr, ##__VA_ARGS__);\
         } while (0)
 
-long long randull()   {
-    return ((long long)rand() << ((sizeof(int) * 8 - 1) * 2)) | 
-           ((long long)rand() << ((sizeof(int) * 8 - 1) * 1)) |
-           ((long long)rand() << ((sizeof(int) * 8 - 1) * 0));
+long long randull(unsigned int *seed)   {
+    return ((long long)rand_r(seed) << ((sizeof(int) * 8 - 1) * 2)) | 
+           ((long long)rand_r(seed) << ((sizeof(int) * 8 - 1) * 1)) |
+           ((long long)rand_r(seed) << ((sizeof(int) * 8 - 1) * 0));
 }
 
 #endif // _COMMON_H
