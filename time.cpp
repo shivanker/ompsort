@@ -5,7 +5,7 @@ using namespace std;
 #include "common.h"
 
 int main()  {
-    const int n = 1<<25;
+    const int n = ((1<<27) * 3)/4;
     int i;
     dataType *data = new dataType[n];
     
