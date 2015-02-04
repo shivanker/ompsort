@@ -7,14 +7,13 @@
 #include "common.h"
 
 const int ser_n = 1<<18;
-dataType *orig_data;
 
-void merge(int *data, int n1, int n2, int *res) {
+void merge(dataType *data, int n1, int n2, dataType *res) {
     // printf("Thread %d doing merge.\n", omp_get_thread_num());
     int i = 0, j = n1, k = 0;
 
     while(i < n1 && j < n2)
-        if((long long)orig_data[data[i]].key < (long long)orig_data[data[j]].key)
+        if((long long)data[i].key < (long long)data[j].key)
             res[k++] = data[i++];
         else
             res[k++] = data[j++];
@@ -25,7 +24,7 @@ void merge(int *data, int n1, int n2, int *res) {
         res[k++] = data[j++];
 }
 
-void mSort_helper(int *data, int n, int *res)   {
+void mSort_helper(dataType *data, int n, dataType *res)   {
     // printf("Thread %d\n", omp_get_thread_num());
     if(n == 1)  {
         res[0] = data[0];
@@ -53,28 +52,21 @@ void mSort_helper(int *data, int n, int *res)   {
 }
 
 void mSort(dataType *data, int n)    {
-    int *res1 = new int[n];
-    int *res2 = new int[n];
-    orig_data = data;
+    dataType *res = new dataType[n];
 
-    #pragma omp parallel firstprivate(res1, res2, n, data, orig_data)
+    #pragma omp parallel firstprivate(res, n, data)
     {
         int i;
         #pragma omp for
         for (i = 0; i < n; ++i)
-        {
-            res1[i] = i;
-            res2[i] = i;
-        }
-        #pragma omp barrier
+            res[i] = data[i];
+
         #pragma omp master// implicit nowait
         {
             Dprintf("%d threads\n", omp_get_num_threads());
-            mSort_helper(res2, n, res1);
+            mSort_helper(res, n, data);
         }
     }
-    apply_perm(data, res1, n);
 
-    delete [] res1;
-    delete [] res2;
+    delete [] res;
 }
