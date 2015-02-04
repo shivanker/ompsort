@@ -4,9 +4,9 @@
 #include <time.h>
 #include <omp.h>
 
-#include "common.h"
+#include "sort.h"
 
-const int ser_n = 1<<18;
+const int ser_n = 1<<13;
 
 void merge(dataType *data, int n1, int n2, dataType *res) {
     // printf("Thread %d doing merge.\n", omp_get_thread_num());
@@ -63,7 +63,7 @@ void mSort(dataType *data, int n)    {
 
         #pragma omp master// implicit nowait
         {
-            Dprintf("%d threads\n", omp_get_num_threads());
+            //printf("%d threads\n", omp_get_num_threads());
             mSort_helper(res, n, data);
         }
     }
