@@ -17,16 +17,8 @@ LIBRARY = libpsort.so
 TEST = check time
 .PHONY: clean debug depend
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-  SONAME = -soname
-endif
-ifeq ($(UNAME_S),Darwin)
-  SONAME = -install_name
-endif
-
 $(LIBRARY): $(LIBOBJS)
-	$(CXX) $(CXXFLAGS) -shared -Wl,$(SONAME),$(LIBRARY) -o $(LIBRARY) $(LIBOBJS)
+	$(CXX) $(CXXFLAGS) -shared -o $(LIBRARY) $(LIBOBJS)
 
 all: $(TEST) $(LIBRARY)
 debug: CXXFLAGS += -DDEBUG
