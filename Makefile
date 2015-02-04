@@ -8,7 +8,7 @@ LFLAGS = -L.
 LIBS = -lpsort
 
 SRCS = check.cpp time.cpp
-LIBSRCS = msort.cpp sort.cpp
+LIBSRCS = qsort.cpp msort.cpp sort.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 LIBOBJS = $(LIBSRCS:.cpp=.o)
@@ -24,7 +24,7 @@ all: $(TEST) $(LIBRARY)
 debug: CXXFLAGS += -DDEBUG
 debug: all
 
-$(TEST): %: %.cpp $(LIBRARY)
+$(TEST): %: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LFLAGS) $(LIBS)
 
 $(LIBOBJS): %.o: %.cpp

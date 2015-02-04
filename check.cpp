@@ -5,7 +5,7 @@ using namespace std;
 #include "common.h"
 
 int main()  {
-    const int n = 1<<15;
+    const int n = 1<<17;
     int i;
     bool failed = false;
     dataType *data = new dataType[n];
@@ -27,7 +27,7 @@ int main()  {
         for(i = 0; i < n; ++i)
             ints.insert((long long)data[i].key);
         
-        pSort(data, n);
+        pSort(data, n, QUICK);
         for(i = 0; i < n-1; ++i)
             if((long long)data[i].key > (long long)data[i+1].key) {
                 printf("(Unordered) ");
