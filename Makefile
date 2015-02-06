@@ -4,8 +4,8 @@ CXX = g++-4.8
 CXXFLAGS = -Wall -fopenmp
 LIBFLAGS = -fPIC
 
-LFLAGS = -L.
-LIBS = -lpsort
+LFLAGS = -L. -L/usr/local/lib
+LIBS = -lpsort -lprofiler
 
 SRCS = check.cpp time.cpp
 LIBSRCS = rsort.cpp qsort.cpp msort.cpp sort.cpp
@@ -23,6 +23,8 @@ $(LIBRARY): $(LIBOBJS)
 all: $(TEST) $(LIBRARY)
 debug: CXXFLAGS += -DDEBUG
 debug: all
+profiler: CXXFLAGS += -Dgprofiler
+profiler: debug
 
 $(TEST): %: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LFLAGS) $(LIBS)
@@ -40,5 +42,7 @@ depend: $(SRCS) $(LIBSRCS)
 
 check.o: common.h sort.h payloadsize.h
 time.o: common.h sort.h payloadsize.h
-msort.o: common.h sort.h payloadsize.h
+rsort.o: sort.h payloadsize.h
+qsort.o: sort.h payloadsize.h
+msort.o: sort.h payloadsize.h
 sort.o: sort.h payloadsize.h

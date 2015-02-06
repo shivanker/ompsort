@@ -1,1 +1,1 @@
-#define LOADSIZE 10
+#define LOADSIZE 0

@@ -1,11 +1,14 @@
 #include <bits/stdc++.h>
 #include <omp.h>
+#ifdef gprofiler
+    #include <google/profiler.h>
+#endif
 using namespace std;
 
 #include "common.h"
 
 int main()  {
-    const int n = 1<<27;
+    const int n = ((long long)(1<<28))*7/4;
     int i;
     dataType *data = new dataType[n];
     
@@ -21,10 +24,16 @@ int main()  {
 
     printf("Beginning sorting..\n");
     
+    #ifdef gprofiler
+      ProfilerStart("/tmp/profile");
+    #endif
     double start, end;
     start = omp_get_wtime();
-    pSort(data, n, RADIX);
+    pSort(data, n, QUICK);
     end = omp_get_wtime();
+    #ifdef gprofiler
+      ProfilerStop();
+    #endif
     for(i = 0; i < n-1; ++i)
         if((long long)data[i].key > (long long)data[i+1].key) {
             printf("Sort failed!\n");
