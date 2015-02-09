@@ -8,7 +8,7 @@ using namespace std;
 #include "common.h"
 
 int main()  {
-    const int n = ((long long)(1<<28))*7/4;
+    const int n = ((long long)(1<<29))*7/8;
     int i;
     dataType *data = new dataType[n];
     
@@ -29,7 +29,7 @@ int main()  {
     #endif
     double start, end;
     start = omp_get_wtime();
-    pSort(data, n, QUICK);
+    pSort(data, n, RADIX);
     end = omp_get_wtime();
     #ifdef gprofiler
       ProfilerStop();
