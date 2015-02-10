@@ -8,7 +8,7 @@ using namespace std;
 #include "common.h"
 
 int main()  {
-    const int n = ((long long)(1<<29))*7/8;
+    const int n = 1<<25;
     int i;
     dataType *data = new dataType[n];
     
@@ -37,6 +37,7 @@ int main()  {
     for(i = 0; i < n-1; ++i)
         if((long long)data[i].key > (long long)data[i+1].key) {
             printf("Sort failed!\n");
+            printf("Time taken: %.2fs\n", end-start);
             return -1;
         }
 
