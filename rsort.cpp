@@ -5,48 +5,10 @@
 #include <omp.h>
 
 #include "sort.h"
-
-#define taskfor(j, n, ...) for(int _i = 0; _i < n; ) \
-{ \
-  int lim = _i+(n)/num_procs; \
-  if(lim < _i+1) \
-    lim = _i+1; \
-  if(lim > (n)) \
-    lim = (n); \
-  j = _i; \
-  PRAGMA(omp task if((n) > for_ser_n) firstprivate(j, lim, ##__VA_ARGS__)) \
-  { \
-    for(; j < lim; ++j)
-
-#define endtaskfor } _i=lim;} \
-  PRAGMA(omp taskwait)
-
-#define PRAGMA(x) _Pragma(#x)
+#include "common.h"
 
 const int ser_n = 1<<9;
-int num_procs, for_ser_n;
-
-void psum(int *data, int n, int *data2) {
-  if(n < 2)
-    return;
-
-  int i;
-  taskfor(i, n/2, data2, data)
-  {
-    data2[i] = data[i<<1] + data[(i<<1) + 1];
-  } endtaskfor;
-
-  psum(data2, n>>1, data2+(n>>1));
-
-  taskfor(i, n/2, data, data2)
-  {
-    data[i<<1] = data2[i]-data[(i<<1)+1];
-    data[(i<<1)+1] = data2[i];
-  } endtaskfor;
-
-  if(n&1)
-    data[n-1] += data2[(n>>1)-1];
-}
+extern int num_procs, for_ser_n;
 
 void rSort_helper(dataType *data, int n, int shift, dataType *buffer, int *bucket, int *buffer2)    {
     // printf ("%d\n", shift);
@@ -83,9 +45,6 @@ void rSort_helper(dataType *data, int n, int shift, dataType *buffer, int *bucke
 }
 
 void rSort(dataType *data, int n)   {
-    num_procs = omp_get_num_procs();
-    for_ser_n = ((1<<9)*num_procs);
-
     // instead of allocating and deallocating buffers all the time, just allocate once and share
     dataType *newdata = new dataType[n];
     int *bucket = new int[n];
