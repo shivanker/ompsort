@@ -44,10 +44,10 @@ void qSort_helper(dataType *data, int n)    {
     data[0] = data[j];
     data[j] = tmp;
 
-    #pragma omp task if(j > ser_n) firstprivate(data, j)
+    #pragma omp task if(j > ser_n)
     qSort_helper(data, j);
 
-    #pragma omp task if(n-i > ser_n) firstprivate(data, j, i, n)
+    #pragma omp task if(n-i > ser_n)
     qSort_helper(data+i, n-i);
 }
 

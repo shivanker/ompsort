@@ -15,14 +15,14 @@ void psum(int *data, int n, int *data2) {
     return;
 
   int i;
-  taskfor(i, n/2, data2, data)
+  taskfor(i, n/2)
   {
     data2[i] = data[i<<1] + data[(i<<1) + 1];
   } endtaskfor;
 
   psum(data2, n>>1, data2+(n>>1));
 
-  taskfor(i, n/2, data, data2)
+  taskfor(i, n/2)
   {
     data[i<<1] = data2[i]-data[(i<<1)+1];
     data[(i<<1)+1] = data2[i];

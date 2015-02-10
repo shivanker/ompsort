@@ -24,7 +24,7 @@ void rSort_helper(dataType *data, int n, int shift, dataType *buffer, int *bucke
     psum(bucket, n, buffer2);
 
     int offset = n-bucket[n-1]-1; // no of zeros - 1
-    taskfor(i, n, shift, invert, data, buffer, offset, bucket)   {
+    taskfor(i, n)   {
       if((((long long)data[i].key >> shift) &1) ^ invert)
         buffer[offset + bucket[i]] = data[i];
       else
