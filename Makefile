@@ -4,8 +4,8 @@ CXX = g++-4.8
 CXXFLAGS = -Wall -fopenmp
 LIBFLAGS = -fPIC
 
-LFLAGS = -L. -L/usr/local/lib
-LIBS = -lpsort -lprofiler
+LFLAGS = -L.
+LIBS = -lpsort
 
 SRCS = check.cpp time.cpp
 LIBSRCS = rsort.cpp qsort.cpp msort.cpp sort.cpp
@@ -24,6 +24,8 @@ all: $(TEST) $(LIBRARY)
 debug: CXXFLAGS += -DDEBUG
 debug: all
 profiler: CXXFLAGS += -Dgprofiler
+profiler: LFLAGS += -L/usr/local/lib
+profiler: LIBS += -lprofiler
 profiler: debug
 
 $(TEST): %: %.cpp
