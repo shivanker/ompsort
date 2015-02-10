@@ -6,7 +6,7 @@
 
 #include "sort.h"
 
-const int ser_n = 1<<13;
+const int ser_n = 1<<9;
 
 void merge(dataType *data, int n1, int n2, dataType *res) {
     // printf("Thread %d doing merge.\n", omp_get_thread_num());
@@ -40,10 +40,10 @@ void mSort_helper(dataType *data, int n, dataType *res)   {
         exit(1);
     }
     
-    #pragma omp task if(n > ser_n) firstprivate(res, n, data) untied
+    #pragma omp task if(n > ser_n) untied
     mSort_helper(res, n/2, data);
  
-    #pragma omp task if(n > ser_n) firstprivate(res, n, data) untied
+    #pragma omp task if(n > ser_n) untied
     mSort_helper(res+n/2, n-n/2, data+n/2);
 
     #pragma omp taskwait
@@ -53,8 +53,9 @@ void mSort_helper(dataType *data, int n, dataType *res)   {
 
 void mSort(dataType *data, int n)    {
     dataType *res = new dataType[n];
+    omp_set_num_threads(omp_get_num_procs()*4);
 
-    #pragma omp parallel firstprivate(res, n, data)
+    #pragma omp parallel
     {
         int i;
         #pragma omp for

@@ -37,10 +37,10 @@ void rSort_helper(dataType *data, int n, int shift, dataType *buffer, int *bucke
     } endtaskfor;
 
     i = ++offset; // i = no of zeros
-    #pragma omp task if(i > ser_n)
+    #pragma omp task if(i > ser_n) untied
     rSort_helper(data, i, shift-1, buffer, bucket, buffer2);
 
-    #pragma omp task if(n-i > ser_n)
+    #pragma omp task if(n-i > ser_n) untied
     rSort_helper(data+i, n-i, shift-1, buffer+i, bucket+i, buffer2+i);
 }
 

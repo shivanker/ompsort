@@ -31,7 +31,7 @@
   if(lim > (n)) \
     lim = (n); \
   j = _i; \
-  PRAGMA(omp task if((n) > for_ser_n) firstprivate(j, lim, ##__VA_ARGS__)) \
+  PRAGMA(omp task if((n) > for_ser_n) firstprivate(j, lim, ##__VA_ARGS__) untied) \
   { \
     for(; j < lim; ++j)
 
