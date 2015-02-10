@@ -20,7 +20,7 @@ TEST = check time
 $(LIBRARY): $(LIBOBJS)
 	$(CXX) $(CXXFLAGS) -shared -o $(LIBRARY) $(LIBOBJS)
 
-all: $(TEST) $(LIBRARY)
+all: $(LIBRARY) $(TEST)
 debug: CXXFLAGS += -DDEBUG
 debug: all
 profiler: CXXFLAGS += -Dgprofiler
