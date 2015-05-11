@@ -1,7 +1,7 @@
 CC  = gcc-4.8
 CXX = g++-4.8
 
-CXXFLAGS = -Wall -fopenmp
+CXXFLAGS = -O3 -Wall -fopenmp
 LIBFLAGS = -fPIC
 
 LFLAGS = -L.
